@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const sql = require('mssql');
+
 const config = {
   user: '4DD_15',  //Vostro user name
   password: 'xxx123##', //Vostra password
@@ -26,6 +27,7 @@ router.get('/search/:name', function(req, res, next) {
   sql.connect(config, err => {
     // ... error check
     if(err) console.log(err);
+
     // Query
     let sqlRequest = new sql.Request();
     sqlRequest.query(`select * from [School].[Person] where FirstName = '${req.params.name}'`, (err, result) => {
@@ -36,5 +38,10 @@ router.get('/search/:name', function(req, res, next) {
     });
   });
 });
+
+router.post('/', function(req, res, next){
+    console.log(req.body);
+    res.send(req.body);
+})
 
 module.exports = router;
